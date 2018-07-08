@@ -57,6 +57,11 @@ RUN cd ${PROJECT_PATH}
 # Export benchmarks results as a volume
 VOLUME ${BENCHMARKS_OUTPUT_PATH}
 
+# Add script to test TCP connections of external services that are specified
+# as dependencies for the runner container
+COPY wait-for.sh /usr/local/bin
+RUN ln -s usr/local/bin/wait-for.sh / # backwards compat
+
 # Add entrypoint that fetches project source
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN ln -s usr/local/bin/docker-entrypoint.sh / # backwards compat
